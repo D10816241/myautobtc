@@ -1,0 +1,8 @@
+flask
+flask-cors
+ccxt
+python-dotenv
+pandas
+numpy
+ta
+requests

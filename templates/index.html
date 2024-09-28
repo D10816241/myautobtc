@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTC 交易機器人控制台</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .status-box, .params-form {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .status-item {
+            margin-bottom: 10px;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .params-form input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BTC 交易機器人控制台</h1>
+        <div class="status-box">
+            <div class="status-item">
+                <strong>當前 BTC/USDT 價格:</strong> <span id="current-price">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>總資金:</strong> <span id="total-balance">加載中...</span> USDT
+            </div>
+            <div class="status-item">
+                <strong>可用餘額:</strong> <span id="free-balance">加載中...</span> USDT
+            </div>
+            <div class="status-item">
+                <strong>已實現盈虧:</strong> <span id="pnl">加載中...</span> USDT
+            </div>
+            <div class="status-item">
+                <strong>SMA:</strong> <span id="sma">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>RSI:</strong> <span id="rsi">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>布林帶:</strong> 上軌 <span id="bb-upper">加載中...</span>, 
+                中軌 <span id="bb-middle">加載中...</span>, 
+                下軌 <span id="bb-lower">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>當前網格步長:</strong> <span id="grid-step">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>當前開放訂單數:</strong> <span id="open-orders">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>交易狀態:</strong> <span id="trading-status">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>自動交易狀態:</strong> <span id="auto-trading-status">加載中...</span>
+            </div>
+            <div class="status-item">
+                <strong>波動率:</strong> <span id="volatility">加載中...</span>
+            </div>
+        </div>
+        <div class="params-form">
+            <h2>交易參數設置</h2>
+            <form id="paramsForm">
+                <label for="INITIAL_CAPITAL">初始資金:</label>
+                <input type="number" id="INITIAL_CAPITAL" name="INITIAL_CAPITAL" step="0.01">
+                
+                <label for="GRID_NUMBER">網格數量:</label>
+                <input type="number" id="GRID_NUMBER" name="GRID_NUMBER">
+                
+                <label for="VOLATILITY_PERIOD">波動率計算周期:</label>
+                <input type="number" id="VOLATILITY_PERIOD" name="VOLATILITY_PERIOD">
+                
+                <label for="MAX_POSITION_SIZE">最大持倉金額:</label>
+                <input type="number" id="MAX_POSITION_SIZE" name="MAX_POSITION_SIZE" step="0.01">
+                
+                <label for="STOP_LOSS_THRESHOLD">止損閾值:</label>
+                <input type="number" id="STOP_LOSS_THRESHOLD" name="STOP_LOSS_THRESHOLD" step="0.01" min="0" max="1">
+                
+                <label for="MAX_OPEN_ORDERS">最大未平倉訂單數量:</label>
+                <input type="number" id="MAX_OPEN_ORDERS" name="MAX_OPEN_ORDERS">
+                
+                <label for="AUTO_TRADE_INTERVAL">自動交易間隔（秒）:</label>
+                <input type="number" id="AUTO_TRADE_INTERVAL" name="AUTO_TRADE_INTERVAL">
+                
+                <button type="submit">更新參數</button>
+            </form>
+        </div>
+        <button id="toggle-trading">切換交易狀態</button>
+        <button id="toggle-auto-trading">切換自動交易</button>
+        <button id="execute-trade">手動執行交易</button>
+        <div id="error-message"></div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
